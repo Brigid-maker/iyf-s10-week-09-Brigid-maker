@@ -10,6 +10,12 @@ import ComponentsDemo from './pages/ComponentsDemo';
 import Timer from './pages/Timer';
 import UserSearch from './pages/UserSearch';
 import TabsDemo from './pages/TabsDemo';
+import Login from './pages/Login';
+import Dashboard from './pages/DashBoard';
+import ProtectedRoute from './components/ProtectedRoutes';
+import UserProfile from './pages/UserProfile';
+import PostDetail from './pages/PostDetail';
+import CreatePost from './pages/CreatePost';
 
 export default function App() {
   return (
@@ -25,6 +31,18 @@ export default function App() {
         <Route path="timer" element={<Timer />} />
         <Route path="search" element={<UserSearch />} />
         <Route path="tabs" element={<TabsDemo />} />
+        <Route path="login" element={<Login />} />
+        <Route path="users/:userId" element={<UserProfile />} />
+        <Route path="posts/:postId" element={<PostDetail />} />
+        <Route path="create" element={<CreatePost />} />
+        <Route
+          path="dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );

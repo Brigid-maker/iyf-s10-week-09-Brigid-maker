@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Input from '../components/shared/Input';
 import Card from '../components/shared/Card';
 
@@ -20,7 +21,7 @@ export default function UserSearch() {
     fetchUsers();
   }, []);
 
-  // Debounce search — wait 400ms after user stops typing
+  // Debounce search
   useEffect(() => {
     const timeout = setTimeout(() => {
       const results = users.filter(user =>
@@ -30,7 +31,7 @@ export default function UserSearch() {
       setFiltered(results);
     }, 400);
 
-    return () => clearTimeout(timeout); // cleanup previous timeout
+    return () => clearTimeout(timeout);
   }, [query, users]);
 
   return (
@@ -52,18 +53,20 @@ export default function UserSearch() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filtered.map(user => (
-          <Card key={user.id}>
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
-                {user.name.charAt(0)}
+          <Link to={`/users/${user.id}`} key={user.id}>
+            <Card>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold text-lg">
+                  {user.name.charAt(0)}
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-800">{user.name}</h3>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <p className="text-sm text-gray-500">{user.phone}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold text-gray-800">{user.name}</h3>
-                <p className="text-sm text-gray-500">{user.email}</p>
-                <p className="text-sm text-gray-500">{user.phone}</p>
-              </div>
-            </div>
-          </Card>
+            </Card>
+          </Link>
         ))}
       </div>
     </div>
